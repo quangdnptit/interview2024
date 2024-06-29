@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class JavaStream {
     public static class Student {
@@ -41,12 +42,11 @@ public class JavaStream {
                 System.out.println(item.getKey()));
 
 
-
         Student student = new Student("Q", 13);
         Student student1 = new Student("D", 23);
         Student student2 = new Student("N", 14);
         List<Student> studentList = Arrays.asList(student, student2, student1);
-        List<Student> data = studentList.stream().sorted(Comparator.comparingInt(Student::getAge)).filter(std -> std.age < 15).toList();
+        List<Student> data = studentList.stream().sorted(Comparator.comparingInt(Student::getAge)).filter(std -> std.age < 15).collect(Collectors.toList());
         System.out.println(new ObjectMapper().writeValueAsString(data));
     }
 }
