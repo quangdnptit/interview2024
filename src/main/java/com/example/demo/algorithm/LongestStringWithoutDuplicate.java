@@ -4,7 +4,7 @@ import java.util.*;
 
 public class LongestStringWithoutDuplicate {
     public static void main(String[] args) {
-        String input = "au";
+        String input = "pwwkew";
         if (input.length() == 0) {
             System.out.println(0);
         }
@@ -16,7 +16,7 @@ public class LongestStringWithoutDuplicate {
         while (right < input.length()) {
             Character rightValue = input.charAt(right);
             if (map.containsKey(rightValue)) {
-                left = Math.max(map.get(rightValue), left);
+                left = Math.max(map.get(rightValue) + 1, left);
             }
             max = Math.max(max, right - left + 1);
             map.put(rightValue, right);
