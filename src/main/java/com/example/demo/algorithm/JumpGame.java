@@ -7,9 +7,12 @@ import java.util.Map;
 //https://leetcode.com/problems/jump-game/description/
 public class JumpGame {
     public boolean canJump(int[] nums) {
+        if (nums.length <= 1) {
+            return true;
+        }
         int targetIdx = nums.length - 1;
-        for (int i = nums.length - 1; i >= 0; i--) {
-            if (nums[i] + i < targetIdx) {
+        for (int i = nums.length - 2; i >= 0; i--) {
+            if (nums[i] + i >= targetIdx) {
                 targetIdx = i;
             }
             if (targetIdx == 0) {
