@@ -2,6 +2,7 @@ package com.example.demo.algorithm;
 
 import java.util.*;
 
+//https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
 public class LongestStringWithoutDuplicate {
     public static void main(String[] args) {
         String input = "pwwkew";

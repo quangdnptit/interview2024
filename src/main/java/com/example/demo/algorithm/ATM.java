@@ -1,5 +1,5 @@
 package com.example.demo.algorithm;
-
+//https://leetcode.com/problems/design-an-atm-machine/description/
 public class ATM {
     public static void main(String[] args) {
         cal(13000);
