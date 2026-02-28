@@ -27,7 +27,9 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.slf4j:slf4j-simple:2.0.9'  // simple logging
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     testImplementation 'junit:junit'
 
     compileOnly 'org.projectlombok:lombok'
