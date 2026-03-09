@@ -1,7 +1,12 @@
 package com.example.demo.algorithm;
 
+import org.apache.kafka.common.cache.LRUCache;
+
 import java.sql.SQLOutput;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class SomeSimpleTasks {
@@ -99,7 +104,7 @@ public class SomeSimpleTasks {
                 longest = odd;
             }
 
-            if(even.length() > longest.length()) {
+            if (even.length() > longest.length()) {
                 longest = even;
             }
         }
@@ -130,6 +135,80 @@ public class SomeSimpleTasks {
         return maxProfit;
     }
 
+    boolean subSequenceCheck(String s1, String s2) {
+        char[] subSequence1 = s1.toCharArray();
+        char[] subSequence2 = s2.toCharArray();
+
+        if (subSequence1.length > subSequence2.length) {
+            return false;
+        }
+
+        int matchFound = 0;
+        for (int i = 0; i < subSequence2.length; i++) {
+            if (subSequence1[matchFound] == subSequence2[i]) {
+                matchFound++;
+            }
+            if (matchFound == subSequence1.length) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public class Request {
+        private LocalDateTime time;
+        private String userId;
+
+        public LocalDateTime getTime() {
+            return time;
+        }
+
+        public void setTime(LocalDateTime time) {
+            this.time = time;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
+        }
+    }
+    ConcurrentHashMap<String, List<Request>> concurrentHashMap = new ConcurrentHashMap<>();
+    public void RateLimit(Request request) {
+        LocalDateTime firstTime = request.getTime().minusMinutes(5);
+        List<Request> requests = concurrentHashMap.get(request.getUserId());
+        List<Request> filtered = requests.stream().filter(item -> item.getTime().isBefore(firstTime)).collect(Collectors.toList());
+
+        if (filtered.size() >= 5) {
+            //todo throw 429 exception
+        } else {
+            requests.add(request);
+        }
+    }
+
+
+    public int findSecondMaxInArr(Integer[] data) {
+        if(data.length < 2) {
+            return -1;
+        }
+
+        int max = Integer.MIN_VALUE;
+        int secondMax = Integer.MIN_VALUE;
+        for(Integer i: data) {
+            if(i > max) {
+                secondMax = max;
+                max = i;
+            } else if (secondMax < i && max > i) {
+                secondMax = i;
+            }
+        }
+
+        return secondMax;
+    }
+
     //todo LRU cache, merge 2 linked list, travel tree
 
     public static void main(String[] args) {
@@ -140,6 +219,8 @@ public class SomeSimpleTasks {
 //        System.out.println(someSimpleTasks.findFirstNotDuplicated("acvc"));
 //        System.out.println(someSimpleTasks.validAnagrams(List.of("eat","tea","tan","ate","nat","bat")));
 //        System.out.println(someSimpleTasks.maxProfit(List.of(1, 6, 2, 8)));
-        System.out.println(someSimpleTasks.longestPalindrome("mirror"));
+//        System.out.println(someSimpleTasks.longestPalindrome("mirror"));
+//        System.out.println(someSimpleTasks.subSequenceCheck("epam", "epamvn"));
+        System.out.println(someSimpleTasks.findSecondMaxInArr(List.of(1,2,3,4,5,9,8).toArray(new Integer[0])));
     }
 }
